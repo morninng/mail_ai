@@ -6,10 +6,18 @@
 	}
 
 	.default{
-		color:blue;
+		.line_message{
+			color:blue;
+		}
 	}
 	.selected{
-		color:red;
+		.line_message{
+			color:red;
+			background-color:yellow;
+			padding:0px;
+			margin-top:3px;
+			margin-bottom:3px;
+		}
 	}
 
 }

@@ -6,13 +6,17 @@
 #suggested_mail .line_num {
   color: black;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/morninng\/Desktop\/SoftwareDownload\/hackerson\/watson\/mail_editui\/sass\/_mail_suggest\.scss}line{font-family:\000038}}
-#suggested_mail .default {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/morninng\/Desktop\/SoftwareDownload\/hackerson\/watson\/mail_editui\/sass\/_mail_suggest\.scss}line{font-family:\000039}}
+#suggested_mail .default .line_message {
   color: blue;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/morninng\/Desktop\/SoftwareDownload\/hackerson\/watson\/mail_editui\/sass\/_mail_suggest\.scss}line{font-family:\0000311}}
-#suggested_mail .selected {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/morninng\/Desktop\/SoftwareDownload\/hackerson\/watson\/mail_editui\/sass\/_mail_suggest\.scss}line{font-family:\0000314}}
+#suggested_mail .selected .line_message {
   color: red;
+  background-color: yellow;
+  padding: 0px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/home\/morninng\/Desktop\/SoftwareDownload\/hackerson\/watson\/mail_editui\/sass\/_conversation\.scss}line{font-family:\000031}}

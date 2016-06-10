@@ -99,7 +99,7 @@ function find_with_otherkeyword(input_sentence){
 
 function goto_rowselection(keyword_sentence){
 	global_status = "row_selection";
-	mail_suggest_ctr.become_select_status;
+	mail_suggest_ctr.become_select_status();
 	show_conversation_ctr.push_ai_comment("何行目から何行目を引用しますか？");
 }
 
@@ -131,14 +131,14 @@ function speech_event_handler(input_sentence){
 				}
 			}
 
-			for(var i=0; i< keyword.search_other_keyword.lengt; i++){
+			for(var i=0; i< keyword.search_other_keyword.length; i++){
 				if(input_sentence.indexOf(keyword.search_other_keyword[i]) != -1){
 					find_with_otherkeyword(input_sentence);
 					return;
 				}
 			}
 
-			for(var i=0; i< keyword.goto_row_selection.lengt; i++){
+			for(var i=0; i< keyword.goto_row_selection.length; i++){
 				if(input_sentence.indexOf(keyword.goto_row_selection[i]) != -1){
 					goto_rowselection()
 					return;

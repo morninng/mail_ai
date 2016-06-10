@@ -23,8 +23,9 @@ MailSuggestVM.prototype.set_context = function(context_array){
 
 
 
-MailSuggestVM.prototype.select_all = function(){
+MailSuggestVM.prototype.select_all = function(context_array){
 
+	var self = this;
 	self.mail_sentence_array.removeAll();
 	self.highlighted_from = 0;
 	self.highlighted_to = context_array.length;

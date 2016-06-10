@@ -61,12 +61,12 @@ MailSuggestCtrl.prototype.show_suggested_mail = function(){
 
 // function to be used on status: row_selection
 
-MailSuggestCtrl.prototype.become_select_mode = function(in_num){
+MailSuggestCtrl.prototype.become_select_status = function(in_num){
 
 	var self = this;
 	//var from_line = 0;
 	//var to_line = self.current_candidate_sentence_array.length;
-	self.mail_suggest_vm.select_all();
+	self.mail_suggest_vm.select_all(self.current_candidate_sentence_array);
 
 }
 

@@ -51,7 +51,7 @@ module.exports = function (grunt) {
         dest: '/public_html/hackerson',
 
 
-        exclusions: ['./app/.sass-cache','./node_modules', './.ftppass']
+        exclusions: ['./app/.sass-cache','./node_modules', './.ftppass','./git']
       }
     },
 
