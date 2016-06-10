@@ -1,0 +1,90 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="./css/marge.css">
+
+</head>
+<body>
+
+
+<div id="container_main">
+
+  <div id="mail">
+
+   	<div id="mail_container">
+  	  	<div id="original_mail">
+  	  		<span data-bind = "text:title"></span>
+  	  	</div>
+  	  	<div id="suggested_mail">
+          <ul data-bind="foreach:mail_sentence_array">
+            <div data-bind="css:line_class">
+              <span class="line_num" data-bind="text:line_num"></span> &ensp;
+              <span data-bind="text:line_context"></span>
+            </div>
+          </ul>
+  	  	</div>
+  	</div>
+
+  	<div id="extracted_sentences">
+  	</div>
+  </div>
+
+
+
+  <div id="conversation_container">
+  	<ul data-bind="foreach:message_array">
+      <li>
+      <!--
+    		<div data-bind="css: speaker_class">
+    			<span data-bind="text:message"></span>
+    		</div>
+-->
+         <div data-bind="css: speaker_class">
+            <div class="message_container">
+                <div class="message_box">
+                   <div class="message">
+                      <span class="chat_sender_name" data-bind="text:name"></span>
+                      <span class="chat_message" data-bind="text:message"></span>
+                   </div>
+                </div>
+            </div>
+         </div>
+
+
+
+<!--
+           <div ng-class="message.position">
+              <div class="message_container">
+                  <div class="message_box">
+                     <div class="message">
+                        <span class="chat_sender_name">{{user_service.user_data[message.user].first_name}}</span>
+                        <span class="chat_message">{{message.context}}</span>
+                     </div>
+                  </div>
+              </div>
+           </div>
+-->
+
+
+      </li>
+  	</ul>
+  </div>
+
+</div>
+
+
+ <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+
+<script src="./js/reserved_keyword.js"></script>
+<script src="./js/mail_suggest_vm.js"></script>
+<script src="./js/mail_suggest_ctrl.js"></script>
+<script src="./js/show_conversation_vm.js"></script>
+<script src="./js/show_conversation_ctrl.js"></script>
+
+<script src="./js/watson_interface.js"></script>
+<script src="./js/app_mgr.js"></script>
+
+</body>
+</html>
+
