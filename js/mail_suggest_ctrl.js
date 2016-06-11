@@ -6,9 +6,7 @@ function MailSuggestCtrl(){
 	self.current_candidate_num = 0;
 	self.current_candidate_sentence_array = new Array();
 	self.loading_visible = true;
-
 }
-
 
 
 MailSuggestCtrl.prototype.initialize = function(){

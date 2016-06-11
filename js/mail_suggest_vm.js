@@ -58,6 +58,7 @@ MailSuggestVM.prototype.reset_hightlight = function(){
 	}
 }
 
+
 MailSuggestVM.prototype.select_all = function(context_array){
 
 	var self = this;

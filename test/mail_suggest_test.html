@@ -33,7 +33,6 @@ var test_mailcandidate_array =
 			{title: ["ccc"], body:["ggg\n hhh \n iii/n"]}
 		];
 	
-
 	mail_suggest_ctr = new MailSuggestCtrl();
 	mail_suggest_ctr.initialize();
 	mail_suggest_ctr.set_mail_candidate(test_mailcandidate_array);
@@ -47,6 +46,7 @@ function next_test(){
 function become_select(){
 	mail_suggest_ctr.become_select_status();
 }
+
 
 function set_start(){
 	mail_suggest_ctr.set_start("二行目");

@@ -102,7 +102,13 @@ function goto_rowselection(keyword_sentence){
 
 function set_starting_row(sentence){
 	console.log(sentence);
-	mail_suggest_ctr.set_start(sentence);
+	mail_suggest_ctr.set_start("starting sentence" + sentence);
+
+}
+
+function set_last_row(sentence){
+	console.log("last sentence:" + sentence);
+	mail_suggest_ctr.set_last("starting sentence" + sentence);
 
 }
 
@@ -173,6 +179,27 @@ function speech_event_handler(input_sentence){
 					var post_string = input_sentence.substr(found_char_length + delimiter_length, string_length);
 					console.log("post string" +  post_string);
 					set_starting_row(pre_string);
+				}
+			}
+			if(post_string){
+				input_sentence = post_string;
+			}
+
+
+			for(var i=0; i< keyword.to_keyword.length; i++){
+				if(input_sentence.indexOf(keyword.to_keyword[i]) != -1){
+					found = true;
+					var found_char_length = input_sentence.indexOf(keyword.to_keyword[i]);
+					console.log(found_char_length);
+					var string_length = input_sentence.length;
+					console.log(string_length);
+					var delimiter_length = keyword.from_keyword[i].length;
+					console.log(delimiter_length);
+					var pre_string = input_sentence.substr(0,found_char_length);
+					console.log("pare string" + pre_string);
+					var post_string = input_sentence.substr(found_char_length + delimiter_length, string_length);
+					console.log("post string" +  post_string);
+					set_last_row(pre_string);
 				}
 			}
 
