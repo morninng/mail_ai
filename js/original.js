@@ -1,4 +1,5 @@
-var Original = function(el) {
+var Original;
+Original = function(el) {
   this.init(el);
 }
 
