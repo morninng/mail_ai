@@ -71,6 +71,45 @@ MailSuggestCtrl.prototype.become_select_status = function(in_num){
 }
 
 
+MailSuggestCtrl.prototype.set_start = function(in_sentence){
+
+	var self = this;
+	var number = self.extract_num(in_sentence)
+	self.mail_suggest_vm.set_start(number)
+}
+
+
+MailSuggestCtrl.prototype.set_last = function(in_sentence){
+
+	var self = this;
+	
+	var number = self.extract_num(in_sentence)
+	self.mail_suggest_vm.set_last(number)
+}
+
+MailSuggestCtrl.prototype.extract_num = function(in_sentence){
+
+	var in_sentence_array = in_sentence.split("");
+	var number_array = new Array();
+
+	for(var i=0; i< in_sentence_array.length; i++){
+		for(j=0; j< num_char_array.length; j++){
+			if(in_sentence_array[i] == num_char_array[j]){
+				var num_converted = num_converter[in_sentence_array[i]];
+				number_array.push(num_converted);
+			}
+		}
+	}
+	if(number_array.length !=0){
+		var number = number_array.join("");
+	}
+	return number;
+
+}
+
+
+
+/*
 
 MailSuggestCtrl.prototype.highlight_row_from = function(in_num){
 
@@ -87,4 +126,4 @@ MailSuggestCtrl.prototype.highlight_row_to = function(in_num){
 
 }
 
-
+*/

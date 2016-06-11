@@ -55,12 +55,9 @@ var show_conversation_ctr = null;
 }());
 
 
-// mail_suggestion
+/**********************************/
+/*********  mail_suggestion *********/
 
-function next_success(){
-	
-
-}
 
 function next_mail_cancdidate(){
 	var result = mail_suggest_ctr.next();
@@ -94,18 +91,25 @@ function find_with_otherkeyword(input_sentence){
 }
 
 
-
-
-
 function goto_rowselection(keyword_sentence){
 	global_status = "row_selection";
 	mail_suggest_ctr.become_select_status();
 	show_conversation_ctr.push_ai_comment("何行目から何行目を引用しますか？");
 }
 
-//  row_selection
+/**********************************/
+/*********  row_selection *********/
 
+function set_starting_row(sentence){
+	console.log(sentence);
+	mail_suggest_ctr.set_start(sentence);
 
+}
+
+function need_line_num(){
+
+	show_conversation_ctr.push_ai_comment("行数がききとれません。");
+}
 
 
 
@@ -153,7 +157,29 @@ function speech_event_handler(input_sentence){
 		break;
 
 		case "row_selection":
-		
+			var found = false;
+			var keyword = reserved_word.row_selection
+			for(var i=0; i< keyword.from_keyword.length; i++){
+				if(input_sentence.indexOf(keyword.from_keyword[i]) != -1){
+					found = true;
+					var found_char_length = input_sentence.indexOf(keyword.from_keyword[i]);
+					console.log(found_char_length);
+					var string_length = input_sentence.length;
+					console.log(string_length);
+					var delimiter_length = keyword.from_keyword[i].length;
+					console.log(delimiter_length);
+					var pre_string = input_sentence.substr(0,found_char_length);
+					console.log("pare string" + pre_string);
+					var post_string = input_sentence.substr(found_char_length + delimiter_length, string_length);
+					console.log("post string" +  post_string);
+					set_starting_row(pre_string);
+				}
+			}
+
+			if(!found){
+				need_line_num();
+			}
+
 		break;
 
 		case "next_or_findother":

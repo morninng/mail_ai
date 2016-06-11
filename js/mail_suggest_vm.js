@@ -19,9 +19,44 @@ MailSuggestVM.prototype.set_context = function(context_array){
 		var obj = {line_class:"default", line_num:i+1, line_context:context_array[i]}
 		self.mail_sentence_array.push(obj)
 	}
+	self.highlighted_to = context_array.length;
 }
 
 
+MailSuggestVM.prototype.set_start = function(start_num){
+
+	var self = this;
+	self.highlighted_from = Number(start_num);
+	self.reset_hightlight();
+}
+
+MailSuggestVM.prototype.set_last = function(last_num){
+
+	var self = this;
+	self.highlighted_to = Number(last_num);
+	self.reset_hightlight();
+}
+
+
+
+
+MailSuggestVM.prototype.reset_hightlight = function(){
+
+	var self = this;
+	var temporal_cache_array = self.mail_sentence_array().concat();
+	self.mail_sentence_array.removeAll();
+
+	for(var i=0; i< temporal_cache_array.length; i++){
+		if((i+1)<self.highlighted_from){
+			temporal_cache_array[i].line_class = "default";
+		}else if((i+1) < (self.highlighted_to  +1)){
+			temporal_cache_array[i].line_class = "selected";
+		}else{
+			temporal_cache_array[i].line_class = "default";
+		}
+		self.mail_sentence_array.push(temporal_cache_array[i]);
+	}
+}
 
 MailSuggestVM.prototype.select_all = function(context_array){
 

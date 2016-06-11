@@ -9,9 +9,6 @@ function ShowConversationVM(){
 
 
 
-
-
-
 ShowConversationVM.prototype.push_own_message = function(message_val){
 	var self = this;
 	var obj = {message:message_val,speaker_class:"chat_msg_own", name:"you"};
