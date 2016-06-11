@@ -17,7 +17,7 @@ ShowConversationCtrl.prototype.initialize = function(){
 ShowConversationCtrl.prototype.push_ai_comment = function(message){
 	var self = this;
 	self.show_conversation_vm.push_ai_message(message);
-
+  chat.scrollBottom();
 }
 
 
@@ -25,5 +25,5 @@ ShowConversationCtrl.prototype.push_own_comment = function(message){
 
 	var self = this;
 	self.show_conversation_vm.push_own_message(message);
-
+  chat.scrollBottom();
 }

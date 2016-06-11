@@ -21,7 +21,7 @@ Answer.prototype.mode = function(mode) {
   }
 };
 
-Answer.prototype.setbody = function(string) {
+Answer.prototype.setBody = function(string) {
   this.body = string;
   this._update();
 }
@@ -33,12 +33,14 @@ Answer.prototype._update = function() {
 Answer.prototype._mode_view = function() {
   this._mode = Answer.MODE_VIEW;
   this.$editor.prop('readonly', true);
+  original.backCenter();
 };
 
 Answer.prototype._mode_edit = function() {
   this._mode = Answer.MODE_EDIT;
   this.$editor.prop('readonly', false);
   this.$editor.focus();
+  original.goCenter();
 };
 
 Answer.prototype.MODE_VIEW = 0;

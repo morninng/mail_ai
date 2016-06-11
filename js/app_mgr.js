@@ -2,6 +2,21 @@ var global_status = null;
 var mail_suggest_ctr = null;
 var show_conversation_ctr = null;
 
+function get_mailcandidate_success(error, mailcandidate_array){
+	if(error){
+		alert("サーバにアクセスできませんインターネット接続してますか？");
+	}else{
+
+		if(mailcandidate_array.length==0){
+			alert("関連するメール履歴がありません。なにか別のキーワードをいただけないでしょうか？");
+			global_status = "mail_suggestion";
+		}else{
+			mail_suggest_ctr.set_mail_candidate(mailcandidate_array);
+			global_status = "mail_suggestion";
+			show_conversation_ctr.push_ai_comment("返信としてこのメールで引用する部分はありますか？");
+		}
+	}
+}
 
 (function () {
 
@@ -15,29 +30,12 @@ var show_conversation_ctr = null;
 	show_conversation_ctr.initialize();
 
 
-	function get_mailcandidate_success(error, mailcandidate_array){
-		if(error){
-			alert("サーバにアクセスできませんインターネット接続してますか？");
-		}else{
-
-			if(mailcandidate_array.length==0){
-				alert("関連するメール履歴がありません。なにか別のキーワードをいただけないでしょうか？");
-				global_status = "mail_suggestion";
-			}else{
-				mail_suggest_ctr.set_mail_candidate(mailcandidate_array);
-				global_status = "mail_suggestion";
-				show_conversation_ctr.push_ai_comment("返信としてこのメールで引用る部分はありますか？");
-			}
-		}
-	}
 	watson_interface.get_initial_mail_candidate("マイニンテンドーのギフトをもらうにはどうすればいいですか？", get_mailcandidate_success);
-
-
 
 
 	var SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 	var recognition = new SpeechRecognition();
-    recognition.continuous = true;
+    	recognition.continuous = true;
 	recognition.lang = 'ja';
 	 
 	recognition.onresult = function(e){
@@ -73,9 +71,10 @@ function new_mail_cancdidate(){
 	var result = mail_suggest_ctr.next();
 	if(result){
 		show_conversation_ctr.push_ai_comment("再検索しました。この文章ではいかがでしょうか？");
+		global_status = "mail_suggestion";
 	}else{
-		show_conversation_ctr.push_ai_comment("回答候補がないので、別の検索キーワードをいただけないでしょうか？");
 		global_status = "expect_other_keyword";
+		show_conversation_ctr.push_ai_comment("回答候補がないので、別の検索キーワードをいただけないでしょうか？");
 	}
 }
 
@@ -84,21 +83,22 @@ function no_matching_keyword(){
 	show_conversation_ctr.push_ai_comment("申し訳ありません。他の候補を見る場合には「次」と、別用語で再検索する場合には「～に関して」とおっしゃっていただけますか？");
 }
 
+/**********************************/
+/*********  expect_other_keyword *********/
 
 function find_with_otherkeyword(input_sentence){
-	watson_interface.find_other_candidate(input_sentence, new_mail_cancdidate);	
+	watson_interface.find_other_candidate(input_sentence, get_mailcandidate_success);	
 
 }
 
+/**********************************/
+/*********  row_selection *********/
 
 function goto_rowselection(keyword_sentence){
 	global_status = "row_selection";
 	mail_suggest_ctr.become_select_status();
 	show_conversation_ctr.push_ai_comment("何行目から何行目を引用しますか？");
 }
-
-/**********************************/
-/*********  row_selection *********/
 
 function set_starting_row(sentence){
 	console.log(sentence);
@@ -118,7 +118,26 @@ function need_line_num(){
 }
 
 
+function set_last_row(sentence){
+	console.log("last sentence:" + sentence);
+	mail_suggest_ctr.set_last("starting sentence" + sentence);
+}
 
+
+function goto_expect_other_keyword(){
+
+	makeMailDraft("","Pepper","DAC近江");
+	var sentence = mail_suggest_ctr.extract_selected_sentences();
+	addMailDraft(sentence);
+	var mail = getMailDraft();
+
+	answer.setBody(mail);
+
+	global_status = "expect_other_keyword";
+	show_conversation_ctr.push_ai_comment("文案が出来上がりました。他に質問はありますか？");
+}
+
+/**********************************/
 
 function speech_event_handler(input_sentence){
 
@@ -185,7 +204,6 @@ function speech_event_handler(input_sentence){
 				input_sentence = post_string;
 			}
 
-
 			for(var i=0; i< keyword.to_keyword.length; i++){
 				if(input_sentence.indexOf(keyword.to_keyword[i]) != -1){
 					found = true;
@@ -200,6 +218,17 @@ function speech_event_handler(input_sentence){
 					var post_string = input_sentence.substr(found_char_length + delimiter_length, string_length);
 					console.log("post string" +  post_string);
 					set_last_row(pre_string);
+				}
+			}
+
+			if(found) {
+				show_conversation_ctr.push_ai_comment("ハイライトされている箇所でよろしいですか？");
+			}
+
+			for(var i=0; i< keyword.goto_expect_other_keyword.length; i++){
+				if(input_sentence.indexOf(keyword.goto_expect_other_keyword[i]) != -1){
+					goto_expect_other_keyword();
+					return;
 				}
 			}
 
