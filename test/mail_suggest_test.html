@@ -57,6 +57,13 @@ function set_last(){
 	mail_suggest_ctr.set_last("三行目");
 }
 
+
+function extract_selected_sentences(){
+	var extracted_sentence_array = mail_suggest_ctr.extract_selected_sentences();
+	console.log(extracted_sentence_array);
+}
+
+
 </script>
 
 
@@ -64,3 +71,4 @@ function set_last(){
 <input type="button" onclick="become_select()" value="become_select">
 <input type="button" onclick="set_start()" value="set_start">
 <input type="button" onclick="set_last()" value="set_last">
+<input type="button" onclick="extract_selected_sentences()" value="extract_selected_sentences">

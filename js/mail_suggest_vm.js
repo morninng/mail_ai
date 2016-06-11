@@ -59,6 +59,7 @@ MailSuggestVM.prototype.reset_hightlight = function(){
 }
 
 
+
 MailSuggestVM.prototype.select_all = function(context_array){
 
 	var self = this;
@@ -73,3 +74,20 @@ MailSuggestVM.prototype.select_all = function(context_array){
 
 }
 
+
+
+MailSuggestVM.prototype.extract_selected_sentences = function(){
+
+	var self = this;
+	var extracted_array = new Array();
+	var temporal_cache_array = self.mail_sentence_array().concat();
+	var extracted_obj_array = temporal_cache_array.slice(self.highlighted_from, self.highlighted_to+1);
+
+	for(var i=0; i< temporal_cache_array.length; i++){
+		if(temporal_cache_array[i].line_class == "selected"){
+			extracted_array.push(temporal_cache_array[i].line_context);
+		}
+	}
+	return extracted_array;
+
+}

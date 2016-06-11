@@ -106,6 +106,13 @@ MailSuggestCtrl.prototype.extract_num = function(in_sentence){
 }
 
 
+MailSuggestCtrl.prototype.extract_selected_sentences = function(){
+
+	var self = this;
+	var selected_sentence = self.mail_suggest_vm.extract_selected_sentences()
+
+	return selected_sentence;
+}
 
 /*
 

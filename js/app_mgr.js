@@ -109,8 +109,8 @@ function set_starting_row(sentence){
 function set_last_row(sentence){
 	console.log("last sentence:" + sentence);
 	mail_suggest_ctr.set_last("starting sentence" + sentence);
-
 }
+
 
 function need_line_num(){
 
