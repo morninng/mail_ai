@@ -21,10 +21,25 @@ var reserved_word = {
 		num_keyword:[
 			"5","4","3","2","1","0"
 		],
+		goto_make_mail_keyword:[
+			"いいよ","いこう","これで","はい","あります","有","ります","いいです","このメール"
+		]
+	},
+	make_mail:{
+		default_template_keyword: [
+			"社外"
+		],
+		office_template_keyword: [
+			"社内"
+		],
+		apology_template_keyword: [
+			"謝罪"
+		],
 		goto_expect_other_keyword:[
 			"いいよ","いこう","これで","はい","あります","有","ります","いいです","このメール"
 		]
 	}
+
 }
 
 
