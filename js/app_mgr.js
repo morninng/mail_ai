@@ -73,8 +73,8 @@ function new_mail_cancdidate(){
 		show_conversation_ctr.push_ai_comment("再検索しました。この文章ではいかがでしょうか？");
 		global_status = "mail_suggestion";
 	}else{
-		global_status = "expect_other_keyword";
 		show_conversation_ctr.push_ai_comment("回答候補がないので、別の検索キーワードをいただけないでしょうか？");
+		global_status = "expect_other_keyword";
 	}
 }
 
@@ -123,14 +123,32 @@ function set_last_row(sentence){
 	mail_suggest_ctr.set_last("starting sentence" + sentence);
 }
 
+/**********************************/
+/*********  mail_make *********/
+
+function goto_make_mail(){
+	if (!maildraft.template_type) {
+		global_status = "make_mail";
+		mail_suggest_ctr.become_select_status();
+		show_conversation_ctr.push_ai_comment("テンプレートタイプを選択してください。「社外」、「社内」、「謝罪」");
+	}
+	else {
+		goto_expect_other_keyword();
+	}
+}
+
+function need_template(){
+	show_conversation_ctr.push_ai_comment("テンプレートタイプが聞き取れません。");
+}
+
 
 function goto_expect_other_keyword(){
 
-	makeMailDraft("","Pepper","DAC近江");
+	makeMailDraft(maildraft.template_type,"Pepper","DAC近江");
+
 	var sentence = mail_suggest_ctr.extract_selected_sentences();
 	addMailDraft(sentence);
 	var mail = getMailDraft();
-
 	answer.setBody(mail);
 
 	global_status = "expect_other_keyword";
@@ -175,7 +193,7 @@ function speech_event_handler(input_sentence){
 			}
 			no_matching_keyword();
 
-			break;
+		break;
 		case "expect_other_keyword":
 			find_with_otherkeyword(input_sentence);
 
@@ -183,7 +201,7 @@ function speech_event_handler(input_sentence){
 
 		case "row_selection":
 			var found = false;
-			var keyword = reserved_word.row_selection
+			var keyword = reserved_word.row_selection;
 			for(var i=0; i< keyword.from_keyword.length; i++){
 				if(input_sentence.indexOf(keyword.from_keyword[i]) != -1){
 					found = true;
@@ -218,11 +236,58 @@ function speech_event_handler(input_sentence){
 					var post_string = input_sentence.substr(found_char_length + delimiter_length, string_length);
 					console.log("post string" +  post_string);
 					set_last_row(pre_string);
+
 				}
 			}
 
-			if(found) {
+			for(var i=0; i< keyword.goto_make_mail_keyword.length; i++){
+				if(input_sentence.indexOf(keyword.goto_make_mail_keyword[i]) != -1){
+					goto_make_mail();
+					return;
+				}
+			}
+
+			if(!found) {
+				need_line_num();
+			}
+			else {
 				show_conversation_ctr.push_ai_comment("ハイライトされている箇所でよろしいですか？");
+			}
+
+
+		break;
+
+		case "make_mail":
+
+			var keyword = reserved_word.make_mail;
+			if (!maildraft.template_type) {
+
+				for(var i=0; i< keyword.default_template_keyword.length; i++){
+					if(input_sentence.indexOf(keyword.default_template_keyword[i]) != -1){
+						maildraft.template_type = "default";
+						goto_expect_other_keyword();
+						return;
+					}
+				}
+	
+				for(var i=0; i< keyword.office_template_keyword.length; i++){
+					if(input_sentence.indexOf(keyword.office_template_keyword[i]) != -1){
+						maildraft.template_type = "office";
+					goto_expect_other_keyword();
+							return;
+					}
+				}
+	
+				for(var i=0; i< keyword.apology_template_keyword.length; i++){
+					if(input_sentence.indexOf(keyword.apology_template_keyword[i]) != -1){
+						maildraft.template_type = "apology";
+						goto_expect_other_keyword();
+						return;
+					}
+				}
+
+				need_template();
+				return;
 			}
 
 			for(var i=0; i< keyword.goto_expect_other_keyword.length; i++){
@@ -231,11 +296,6 @@ function speech_event_handler(input_sentence){
 					return;
 				}
 			}
-
-			if(!found){
-				need_line_num();
-			}
-
 		break;
 
 		case "next_or_findother":

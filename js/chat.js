@@ -1,7 +1,7 @@
 var Chat;
 Chat = function(el) {
   this.init(el);
-  this.isShow = true;
+  this._isShow = true;
 }
 
 Chat.prototype.init = function(el) {
@@ -10,20 +10,18 @@ Chat.prototype.init = function(el) {
   this._timer = null;
 };
 
+Chat.prototype.isShow = function() {
+  return this._isShow;
+};
+
 Chat.prototype.hide = function() {
   this.$el.addClass('is-hide');
+  this._isShow = false;
 };
 
 Chat.prototype.show = function() {
   this.$el.removeClass('is-hide');
-
-  if (this._timer) clearTimeout(this.timer);
-  if (this.isShow) return;
-
-  var self = this;
-  this._timer = setTimeout(function(){
-    self.hide();
-  }, 10000);
+  this._isShow = true;
 };
 
 Chat.prototype.scrollBottom = function() {

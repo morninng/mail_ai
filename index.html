@@ -47,15 +47,16 @@
   <div class="col-md-4 answer">
     <h2><i class="fa fa-paper-plane" aria-hidden="true"></i> &nbsp;Answer</h2>
 
-    <textarea class="editor">
-      メール本文を 表示
-    </textarea>
-    <button id="ok" type="button" class="btn btn-primary btn-lg">
-      このメールでOK
-    </button>
+    <textarea class="editor">ここに作成されたメール本文が表示されます</textarea>
+    <a id="ok" href="#" class="editor_ok">Edit</a>
   </div>
 </div>
-<div class="chat chat-wrapper">
+
+<div class="chat chat-wrapper is-hide">
+  <a href="#" class="chat-toggle">
+    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+  </a>
   <div class="direct-chat-primary">
     <h2><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Need Help?</h2>
 
@@ -134,6 +135,18 @@
   });
 
   var chat = new Chat('.chat');
+  $(".chat-toggle").on("click", function(e){
+    e.preventDefault();
+    if (chat.isShow()) {
+      chat.hide();
+    } else {
+      chat.show();
+    }
+  });
+
+  setTimeout(function(){
+    chat.show();
+  }, 1000);
 </script>
 
 
